@@ -4,79 +4,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Staff Dashboard</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .navbar-nav .nav-item {
+            margin: 0 1rem;
+        }
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            font-size: 1.1rem;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #007bff !important;
+        }
+        .container {
+            padding-top: 50px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .card-body {
+            padding: 25px;
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 10px;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .card-text {
+            font-size: 1rem;
+            color: #555;
+            margin: 10px 0;
+            text-decoration: none;
+            display: block;
+        }
+        .card-text:hover {
+            color: #007bff;
+        }
+        .d-flex {
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .navbar-toggler-icon {
+            background-color: white;
+        }
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 
     <div>
-        <div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container-fluid">
-                  <a class="navbar-brand" href="#"> STAFF DASHBOARD </a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"> STAFF DASHBOARD </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse " id="navbarScroll">
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                      <li class="nav-item m-2">
-                        <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
-                      </li>
-                      <li class="nav-item  m-2">
-                        <a class="nav-link  text-white" href="#">Login</a>
-                      </li>
-                     
-                      <li class="nav-item  m-2">
-                        <a class="nav-link text-white " href="#">View Courses</a>
-                      </li>
-                      <li class="nav-item  m-2">
-                        <a class="nav-link text-white" href="#">View Facilities</a>
-                      </li>
-                      
-                      
-                    </ul>
-                    <ul class="" style="--bs-scroll-height: 100px;">
-                        
-                        <li class="nav-item  m-2">
-                          <a class="nav-link text-white" href="#">LogOut</a>
+                        <li class="nav-item">
+                            <a class="nav-link active text-white" href="#">Home</a>
                         </li>
-                        
-                        
-                      </ul>
-                   
-                  </div>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">View Courses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">View Facilities</a>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">LogOut</a>
+                        </li>
+                    </ul>
                 </div>
-              </nav>
-        </div>
-
-        <div>
-          <p class="card-text">{{user}}</p>
-
-        </div>
-  
-        <div class="container   mt-5">
-            <div class=" d-flex justify-content-center ">
-            
-            
-                <div class="card " style="width: 60rem;">
-                  <div class="card-body text-center">
-                    <h5 class="card-title ">Manage Student</h5>
-                    <a  href="{% url 'courselist' %}" class="card-title ">View Courses</ha>
-                      <a href="{% url 'portfoliolist' %}">View Portfolios</a>
-                    <a href="{% url 'studentList' %}"  class="card-text">Mark student attendance</a> 
-                    <a href="{% url 'adminstudentlist' %}"  class="card-text">View Student list</a> 
-
-                    <p class="card-text">Manage Student Attendance</p>
-                    <p class="card-text">View performance status</p>
-                    <p class="card-text">Manage Result</p>
-                </div>
-               </div>
             </div>
-             </div> 
-              </div>
-   
+        </nav>
+
+        <div class="container mt-5">
+            <p class="card-text text-center">{{ user }}</p>
+
+            <div class="d-flex justify-content-center">
+                <div class="card" style="width: 60rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Manage Student</h5>
+                        <a href="{% url 'courselist' %}" class="card-text">View Courses</a>
+                        <a href="{% url 'portfoliolist' %}" class="card-text">View Portfolios</a>
+                        <a href="{% url 'studentList' %}" class="card-text">Mark student attendance</a>
+                        <a href="{% url 'adminstudentlist' %}" class="card-text">View Student list</a>
+                        <p class="card-text">Manage Student Attendance</p>
+                        <p class="card-text">View performance status</p>
+                        <p class="card-text">Manage Result</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

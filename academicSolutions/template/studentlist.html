@@ -3,48 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student Attendance</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f7;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td input[type="radio"] {
+            margin: 0 8px;
+        }
+
+        td button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        td button:hover {
+            background-color: #45a049;
+        }
+
+        label {
+            font-size: 1rem;
+            margin: 0 10px;
+        }
+
+        form {
+            display: inline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+    </style>
 </head>
 <body>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Student ID</th>
-                <th> Attendance</th>
+    <div class="container">
+        <h1>Student Attendance</h1>
 
-
-            </tr>
-        </thead>
-        <tbody>
-            {% for student in students %}
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ student.user.username }}</td>
-                    <td>{{ student.user.email }}</td>
-                    <td>{{ student.id }}</td>
-                    <td>
-                        <form method="POST" action="{% url 'markattendance'  %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="student_id" value="{{ student.id }}">
-                            
-                            <label for="present">Present</label>
-                            <input type="radio" name="attendance_status" value="present" id="present">
-                            
-                            <label for="absent">Absent</label>
-                            <input type="radio" name="attendance_status" value="absent" id="absent">
-                            
-                            <button type="submit">Mark Attendance</button>
-                        </form>
-                     </td>
-                   
-                    
-                
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Student ID</th>
+                    <th>Attendance</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.user.username }}</td>
+                        <td>{{ student.user.email }}</td>
+                        <td>{{ student.id }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'markattendance' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="student_id" value="{{ student.id }}">
+
+                                <label for="present">Present</label>
+                                <input type="radio" name="attendance_status" value="present" id="present">
+
+                                <label for="absent">Absent</label>
+                                <input type="radio" name="attendance_status" value="absent" id="absent">
+
+                                <button type="submit">Mark Attendance</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>

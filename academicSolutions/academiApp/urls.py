@@ -24,7 +24,8 @@ urlpatterns = [
     path('stdportfolio/',views.stdportfolio,name='stdportfolio'),
     path('adminstudentlist/',views.adminstudentlist,name='adminstudentlist'),
     path('adminstafflist/',views.adminstafflist,name='adminstafflist'),
-    path('addmark/',views.addmark,name='addmark')
+    path('addmark/',views.addmark,name='addmark'),
+    path('marklist/<int:course_id>',views.marklist,name='marklist')
    
 ]
 

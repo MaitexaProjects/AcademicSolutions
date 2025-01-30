@@ -4,53 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Add Course</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+    </style>
 </head>
 <body>
- <div class="container">
-    <form method="POST"  action="{% url 'addCourse' %}" >
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Course Name</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="course_name"  >
-          </div>
-          <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Course Description</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
-          </div>
-          <div class="row g-3">
-            <div class="col">
-            <label for="" class="form-label">Start  Date</label>
-
-              <input type="date" class="form-control" placeholder="First name" aria-label="First name" name="start_date" >
+    <div class="container">
+        <h2 class="mb-4">Add New Course</h2>
+        <form method="POST" action="{% url 'addCourse' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="courseName" class="form-label">Course Name</label>
+                <input type="text" class="form-control" id="courseName" name="course_name" placeholder="Enter course name" required>
             </div>
-            <div class="col">
-            <label for="" class="form-label">End  Date</label>
-
-              <input type="date" class="form-control" placeholder="Last name" aria-label="Last name" name="end_date">
+            <div class="mb-3">
+                <label for="courseDescription" class="form-label">Course Description</label>
+                <textarea class="form-control" id="courseDescription" name="description" rows="3" placeholder="Enter course description" required></textarea>
             </div>
-            <div class="col">
-                <label for="" class="form-label">Duration</label>
-    
-                  <input type="number" class="form-control" placeholder="Last name" aria-label="Last name" name="duration">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="startDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="startDate" name="start_date" required>
                 </div>
-          </div>
-          <!-- <div class="col">
-            <label for="" class="form-label">Faculty Incharge</label>
-
-              <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" name="faculty_in_charge">
-            </div> -->
+                <div class="col-md-6">
+                    <label for="endDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="endDate" name="end_date" required>
+                </div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="duration" class="form-label">Duration (in weeks)</label>
+                <input type="number" class="form-control" id="duration" name="duration" placeholder="Enter duration" required>
+            </div>
             <button type="submit" class="btn btn-primary">Add Course</button>
-      </form>
- </div>
-    
-
-
-    <script src="{% static 'js/script.js'  %}"> </script>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

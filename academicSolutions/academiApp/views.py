@@ -333,7 +333,8 @@ def addmark(request):
             )
 
             messages.success(request, "Marks added successfully!")
-            return redirect('marks_list')  # Redirect to a page displaying the list of marks
+            return redirect('marklist',course_id=course_id)
+
 
         except AcademiApp.DoesNotExist:
             messages.error(request, "Student not found.")
@@ -342,11 +343,36 @@ def addmark(request):
         except Exception as e:
             messages.error(request, f"An error occurred: {str(e)}")
 
-    # Fetch students and courses to display in the form
     students = AcademiApp.objects.filter(role='student')
     courses = Course.objects.all()
 
     return render(request, 'addmark.html', {'students': students, 'courses': courses})
+  
+
+
+
+
+
+def marklist(request, course_id):
+    course = Course.objects.get(id=course_id)
+    marks = Marks.objects.filter(course=course)
+    performance = {}
+
+    for mark in marks:
+        student = mark.student
+        if student not in performance:
+            performance[student] = {'total_marks': 0, 'marks_obtained': 0}
+        performance[student]['total_marks'] += mark.total_marks
+        performance[student]['marks_obtained'] += mark.marks_obtained
+
+    for student, data in performance.items():
+        data['percentage'] = (data['marks_obtained'] / data['total_marks']) * 100 if data['total_marks'] > 0 else 0
+
+    return render(request, 'marklist.html', {'course': course, 'performance': performance})
+
+
+
+
 
 
 
