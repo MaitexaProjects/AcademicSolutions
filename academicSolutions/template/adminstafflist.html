@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static  %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Staff list</h1>
+        <table border="1" class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Place</th>
+                    <th>District</th>
+                    <th>Pin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for staff in staff %}
+                    <tr>
+                        <td>{{ staff.user.username }}</td>
+                        <td>{{ staff.get_role_display }}</td>
+                        <td>{{ staff.place }}</td>
+                        <td>{{ staff.district }}</td>
+                        <td>{{ staff.pin }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+</html>

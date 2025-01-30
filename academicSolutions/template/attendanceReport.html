@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Student</th>
+               <th>status</th>
+               <th>Date</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.user.username }}</td>
+                    {% for record in attendance_data %}
+                    {% if record.student == student %}
+                        <td>
+                            {% if record.is_present %}
+                                Present
+                            {% else %}
+                                Absent
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{record.date}}
+                        </td>
+                        {% endif %}
+
+                    {% endfor %}
+                </tr>
+               
+            {% endfor %}
+        </tbody>
+    </table>
+   
+</body>
+</html>

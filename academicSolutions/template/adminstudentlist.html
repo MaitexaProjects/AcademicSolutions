@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Student List</h1>
+        <table border="1" class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Course</th>
+                    <th>Place</th>
+                    <th>District</th>
+                    <th>Pin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.user.username }}</td>
+                        <td>{{ student.get_role_display }}</td>
+                        <td>{{ student.course }}</td>
+                        <td>{{ student.place }}</td>
+                        <td>{{ student.district }}</td>
+                        <td>{{ student.pin }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

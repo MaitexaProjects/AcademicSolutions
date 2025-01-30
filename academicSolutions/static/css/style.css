@@ -1,0 +1,41 @@
+.stdsignbody{
+   background-color: aqua;
+}
+.formstyle{
+    background-color: red;
+}
+/* styles.css */
+
+.portfolio-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.portfolio-form input,
+.portfolio-form textarea,
+.portfolio-form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.portfolio-form input[type="text"],
+.portfolio-form textarea {
+    border: 1px solid #ddd;
+}
+
+.portfolio-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 16px;
+}
+
+.portfolio-form button:hover {
+    background-color: #0056b3;
+}

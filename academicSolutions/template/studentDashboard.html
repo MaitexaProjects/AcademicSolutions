@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    
+</head>
+<body>
+    <div>
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="#">STUDENT DASHBOARD</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse " id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                      <li class="nav-item m-2">
+                        <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
+                      </li>
+                      <li class="nav-item  m-2">
+                        <a class="nav-link  text-white" href="#">Login</a>
+                      </li>
+                     
+                      <li class="nav-item  m-2">
+                        <a class="nav-link text-white " href="#">View Courses</a>
+                      </li>
+                      <li class="nav-item  m-2">
+                        <a class="nav-link text-white" href="#">View Facilities</a>
+                      </li>
+                      
+                      
+                    </ul>
+                    <ul class="" style="--bs-scroll-height: 100px;">
+                        
+                        <li class="nav-item  m-2">
+                          <a class="nav-link text-white" href="#">LogOut</a>
+                        </li>
+                        
+                        
+                      </ul>
+                   
+                  </div>
+                </div>
+              </nav>
+        </div>
+         
+    
+        <div>
+          <p class="card-text">{{user}}</p>
+
+        </div>
+
+        <div class="container   mt-5">
+          <div class=" d-flex justify-content-center ">
+          
+          
+              <div class="card " style="width: 60rem;">
+                <div class="card-body text-center">
+                  <a href="{% url 'courselist' %}"   class="card-title ">view Courses</a>
+                  <a href="{% url 'attendance_report' %}" class="card-title">View Attendance Details</a> 
+                  <h5 class="card-title">View  result</h5>
+                  <h5 class="card-title">View performance status</h5>
+                  <h5 class="card-title">Manage Result</h5>
+              </div>
+             </div>
+          </div>
+           </div> 
+
+        
+            </div>
+</body>
+</html>

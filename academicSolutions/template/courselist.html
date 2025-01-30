@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if courses %}
+        <table style="border:1px solid black">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                    <tr>
+                        <td>{{ course.course_name }}</td>
+                        <td>{{ course.description }}</td>
+                        <td>{{ course.start_date }}</td>
+                        <td>{{ course.end_date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No courses available.</p>
+    {% endif %}
+</body>
+</html>
