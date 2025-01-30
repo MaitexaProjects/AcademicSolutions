@@ -10,6 +10,7 @@ admin.site.register(AcademiApp)
 admin.site.register(Attendance)
 admin.site.register(Course)
 admin.site.register(Portfolio)
-admin.site.register(Marks, MarksAdmin)
+admin.site.register(Marks)
+
 
 

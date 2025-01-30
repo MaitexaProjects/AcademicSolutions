@@ -62,7 +62,7 @@ class Portfolio(models.Model):
 
     def __str__(self):
         return self.title
-    
+
 
 class Marks(models.Model):
     student = models.ForeignKey(AcademiApp, on_delete=models.CASCADE, limit_choices_to={'role': 'student'})
@@ -72,8 +72,13 @@ class Marks(models.Model):
     exam_date = models.DateField()
 
     def __str__(self):
-        return f"{self.student.user.username} - {self.course.course_name} - {self.marks_obtained}/{self.total_marks}"
+        return f"{self.student.user.username} - {self.course.course_name} - {self.exam_date}"
     
-    @property
-    def percentage(self):
-        return (self.marks_obtained / self.total_marks) * 100 if self.total_marks > 0 else 0
+
+
+
+    
+
+
+
+

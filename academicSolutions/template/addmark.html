@@ -8,77 +8,33 @@
 </head>
 <body>
 
-    {% block content %}
-  <h2>Add Marks for Student</h2>
-  
-  <form method="POST">
+  <form method="POST" action="{% url 'addmark' %}">
     {% csrf_token %}
-    
-    <!-- Student Field -->
     <label for="student">Student:</label>
     <select name="student" id="student">
-      {% for student in students %}
-        <option value="{{ student.id }}">{{ student }}kjf vndlkfx</option>
-      {% endfor %}
-    </select>
-    {% if form.student.errors %}
-      <div class="text-danger">
-        {% for error in form.student.errors %}
-          <p>{{ error }}</p>
+        {% for student in students %}
+            <option value="{{ student.id }}">{{ student.user.username }}</option>
         {% endfor %}
-      </div>
-    {% endif %}
+    </select><br>
 
-    <!-- Course Field -->
     <label for="course">Course:</label>
     <select name="course" id="course">
-      {% for course in courses %}
-        <option value="{{ course.id }}">{{ course }}</option>
-      {% endfor %}
-    </select>
-    {% if form.course.errors %}
-      <div class="text-danger">
-        {% for error in form.course.errors %}
-          <p>{{ error }}</p>
+        {% for course in courses %}
+            <option value="{{ course.id }}">{{ course.course_name }}</option>
         {% endfor %}
-      </div>
-    {% endif %}
-    
-    <!-- Marks Obtained -->
+    </select><br>
+
     <label for="marks_obtained">Marks Obtained:</label>
-    <input type="number" name="marks_obtained" id="marks_obtained" value="{{ form.marks_obtained.value }}">
-    {% if form.marks_obtained.errors %}
-      <div class="text-danger">
-        {% for error in form.marks_obtained.errors %}
-          <p>{{ error }}</p>
-        {% endfor %}
-      </div>
-    {% endif %}
-    
-    <!-- Total Marks -->
+    <input type="number" name="marks_obtained" id="marks_obtained" required><br>
+
     <label for="total_marks">Total Marks:</label>
-    <input type="number" name="total_marks" id="total_marks" value="{{ form.total_marks.value }}">
-    {% if form.total_marks.errors %}
-      <div class="text-danger">
-        {% for error in form.total_marks.errors %}
-          <p>{{ error }}</p>
-        {% endfor %}
-      </div>
-    {% endif %}
-    
-    <!-- Exam Date -->
+    <input type="number" name="total_marks" id="total_marks" required><br>
+
     <label for="exam_date">Exam Date:</label>
-    <input type="date" name="exam_date" id="exam_date" value="{{ form.exam_date.value }}">
-    {% if form.exam_date.errors %}
-      <div class="text-danger">
-        {% for error in form.exam_date.errors %}
-          <p>{{ error }}</p>
-        {% endfor %}
-      </div>
-    {% endif %}
-    
+    <input type="date" name="exam_date" id="exam_date" required><br>
+
     <button type="submit">Submit</button>
-  </form>
-  {% endblock %}
+</form>
+
 </body>
 </html>

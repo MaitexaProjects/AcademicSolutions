@@ -241,39 +241,38 @@ def attendance_report(request):
 
     students = AcademiApp.objects.filter(role='student')
     
-    # Create a dictionary to hold attendance data for each student
+ 
     attendance_data = {}
     
-    # Iterate over each student to fetch their attendance records
+   
     
-        # Get all attendance records for the student
-    attendance_records = Attendance.objects.all().order_by('date')  # Order by date
-        # attendance_data[student.id] = attendance_records
     
-    # Render the attendance report template and pass the data
+    attendance_records = Attendance.objects.all().order_by('date') 
+    
+ 
     return render(request, 'attendanceReport.html', {
         'attendance_data': attendance_records, 
         'students': students
     })
 
 
-@login_required  # Ensures only logged-in users can access this view
+@login_required 
 def add_portfolio(request):
-    # Ensure the logged-in user is a student
+ 
     try:
         student_profile = AcademiApp.objects.get(user=request.user, role='student')
     except AcademiApp.DoesNotExist:
         messages.error(request, "You are not authorized to add a portfolio.")
-        return redirect('home')  # Redirect if user is not a student
+        return redirect('home') 
 
     if request.method == 'POST':
         form = PortfolioForm(request.POST, request.FILES)
         if form.is_valid():
             portfolio = form.save(commit=False)
-            portfolio.user = request.user  # Assign logged-in student
+            portfolio.user = request.user
             portfolio.save()
             messages.success(request, "Portfolio added successfully!")
-            return redirect('portfoliolist')  # Redirect to portfolio list page
+            return redirect('portfoliolist') 
         else:
             messages.error(request, "There was an error in your submission.")
 
@@ -295,21 +294,66 @@ def stdportfolio(request):
 
 
 def adminstudentlist(request):
-    # Fetch only students from the AcademiApp model
+    
     students = AcademiApp.objects.filter(role='student')
     
     return render(request, 'adminstudentlist.html', {'students': students})
 
 
 def adminstafflist(request):
-    # Fetch only students from the AcademiApp model
+
     staff = AcademiApp.objects.filter(role='staff')
     
     return render(request, 'adminstafflist.html', {'staff': staff})
 
 
+
+
+
+
 def addmark(request):
-   
-    
-    return render(request,'addmark.html')
+    if request.method == 'POST':
+        student_id = request.POST.get('student')
+        course_id = request.POST.get('course')
+        marks_obtained = request.POST.get('marks_obtained')
+        total_marks = request.POST.get('total_marks')
+        exam_date = request.POST.get('exam_date')
+
+        try:
+            student = AcademiApp.objects.get(id=student_id, role='student')
+            course = Course.objects.get(id=course_id)
+
+            # Create a new Marks record
+            Marks.objects.create(
+                student=student,
+                course=course,
+                marks_obtained=marks_obtained,
+                total_marks=total_marks,
+                exam_date=exam_date
+            )
+
+            messages.success(request, "Marks added successfully!")
+            return redirect('marks_list')  # Redirect to a page displaying the list of marks
+
+        except AcademiApp.DoesNotExist:
+            messages.error(request, "Student not found.")
+        except Course.DoesNotExist:
+            messages.error(request, "Course not found.")
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
+
+    # Fetch students and courses to display in the form
+    students = AcademiApp.objects.filter(role='student')
+    courses = Course.objects.all()
+
+    return render(request, 'addmark.html', {'students': students, 'courses': courses})
+
+
+
+
+
+
+
+
+
 
