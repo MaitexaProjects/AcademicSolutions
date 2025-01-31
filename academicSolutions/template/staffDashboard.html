@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,85 +10,176 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <style>
+        /* General Body Styles */
         body {
-            background-color: #f4f7fc;
+            background-color: #f0f4f7;
             font-family: 'Arial', sans-serif;
             color: #333;
             margin: 0;
             padding: 0;
         }
+
         .navbar {
-            background-color: #343a40;
+            background-color: #007bff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
+
         .navbar-brand {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: bold;
             color: #ffffff;
         }
+
         .navbar-nav .nav-item {
             margin: 0 1rem;
         }
+
         .navbar-nav .nav-link {
             color: #ffffff !important;
             font-size: 1.1rem;
         }
+
         .navbar-nav .nav-link:hover {
-            color: #007bff !important;
+            color: #f8f9fa !important;
         }
+
+        /* Container for content */
         .container {
-            padding-top: 50px;
+            padding-top: 80px;
+            padding-bottom: 50px;
         }
+
+        /* Card Styling */
         .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+            border: none;
         }
+
         .card:hover {
             transform: translateY(-10px);
         }
+
         .card-body {
-            padding: 25px;
-            text-align: center;
+            padding: 30px;
             background-color: #ffffff;
-            border-radius: 10px;
+            border-radius: 15px;
+            text-align: center;
         }
+
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #007bff;
-        }
-        .card-text {
-            font-size: 1rem;
-            color: #555;
-            margin: 10px 0;
-            text-decoration: none;
-            display: block;
-        }
-        .card-text:hover {
-            color: #007bff;
-        }
-        .d-flex {
-            justify-content: center;
             margin-bottom: 20px;
         }
+
+        .card-text {
+            font-size: 1.1rem;
+            color: #666;
+            margin: 15px 0;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .card-text:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        .d-flex {
+            justify-content: center;
+            margin-top: 20px;
+        }
+
         .navbar-toggler-icon {
             background-color: white;
         }
+
         .error {
             color: #dc3545;
             font-size: 14px;
             text-align: center;
             margin-top: 10px;
         }
+
+        /* Custom Card Styles */
+        .staff-card {
+            background-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .staff-card .card-body {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 40px;
+        }
+
+        .staff-card .card-text {
+            font-size: 1.2rem;
+            color: #444;
+        }
+
+        /* Hover Effects */
+        .card:hover {
+            transform: translateY(-15px);
+        }
+
+        /* Button Styles */
+        .btn-custom {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #007bff;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .d-flex {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <div>
+        <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"> STAFF DASHBOARD </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="#">STAFF DASHBOARD</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarScroll">
@@ -114,20 +206,27 @@
             </div>
         </nav>
 
+        <!-- Dashboard Content -->
         <div class="container mt-5">
-            <p class="card-text text-center">{{ user }}</p>
+            <h3 class="card-text text-center">{{ user }}</h3>
 
             <div class="d-flex justify-content-center">
                 <div class="card" style="width: 60rem;">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Manage Student</h5>
-                        <a href="{% url 'courselist' %}" class="card-text">View Courses</a>
-                        <a href="{% url 'portfoliolist' %}" class="card-text">View Portfolios</a>
-                        <a href="{% url 'studentList' %}" class="card-text">Mark student attendance</a>
-                        <a href="{% url 'adminstudentlist' %}" class="card-text">View Student list</a>
-                        <p class="card-text">Manage Student Attendance</p>
-                        <p class="card-text">View performance status</p>
-                        <p class="card-text">Manage Result</p>
+                        <h5 class="card-title">Manage Students</h5>
+                        <a href="{% url 'attendance_report' %}" class="card-text btn-custom" >View Attendance Details</a>
+
+                        <a href="{% url 'courselist' %}" class="card-text btn-custom">View Courses</a>
+                        <a href="{% url 'portfoliolist' %}" class="card-text btn-custom">View Portfolios</a>
+                        <a href="{% url 'studentList' %}" class="card-text btn-custom">Mark Student Attendance</a>
+                        <a href="{% url 'adminstudentlist' %}" class="card-text btn-custom">View Student List</a>
+                        <a href="{% url 'addmark' %}" class="card-text btn-custom">Add Mark</a>
+
+                        <!-- <a href="{% url 'addmark' %}" class="card-text btn-custom">Add Mark</a> -->
+
+
+
+                        
                     </div>
                 </div>
             </div>
@@ -135,6 +234,12 @@
 
     </div>
 
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Educational Management System | All Rights Reserved</p>
+    </div>
+
     <script src="{% static 'js/script.js' %}"></script>
 </body>
+
 </html>
