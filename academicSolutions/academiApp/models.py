@@ -64,19 +64,27 @@ class Portfolio(models.Model):
         return self.title
 
 
-class Marks(models.Model):
-    student = models.ForeignKey(AcademiApp, on_delete=models.CASCADE, limit_choices_to={'role': 'student'})
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    marks_obtained = models.IntegerField()
-    total_marks = models.IntegerField()
-    exam_date = models.DateField()
+# class Marks(models.Model):
+#     student = models.ForeignKey(AcademiApp, on_delete=models.CASCADE, limit_choices_to={'role': 'student'})
+#     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+#     marks_obtained = models.IntegerField()
+#     total_marks = models.IntegerField()
+#     exam_date = models.DateField()
 
-    def __str__(self):
-        return f"{self.student.user.username} - {self.course.course_name} - {self.exam_date}"
+#     def __str__(self):
+#         return f"{self.student.user.username} - {self.course.course_name} - {self.exam_date}"
     
 
 
+class AcademicPerformance(models.Model):
+    student = models.ForeignKey(AcademiApp, on_delete=models.CASCADE, limit_choices_to={'role': 'student'})
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    marks_obtained = models.DecimalField(max_digits=5, decimal_places=2)
+    grade = models.CharField(max_length=2)
+    remarks = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.student.user.username} - {self.course.course_name} - {self.marks_obtained}"
     
 
 

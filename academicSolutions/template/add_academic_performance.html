@@ -90,9 +90,9 @@
     </style>
 </head>
 <body>
-<div class="container">
+<!-- <div class="container">
     <h2>Enter Student Marks</h2>
-    <form method="POST" action="{% url 'addmark' %}">
+    
         {% csrf_token %}
         <div class="form-group">
             <label for="student">Student:</label>
@@ -131,6 +131,40 @@
             </div>
         {% endfor %}
     {% endif %}
+</div> -->
+
+
+<div>
+    <form method="post" action="{% url 'add_academic_performance' %}">
+        {% csrf_token %}
+        <label for="student">Student:</label>
+        <select name="student" id="student">
+            {% for student in students %}
+                <option value="{{ student.id }}">{{ student.user.username }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="course">Course:</label>
+        <select name="course" id="course">
+            {% for course in courses %}
+                <option value="{{ course.id }}">{{ course.course_name }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="marks_obtained">Marks Obtained:</label>
+        <input type="number" step="0.01" name="marks_obtained" id="marks_obtained" required>
+    
+        <label for="grade">Grade:</label>
+        <input type="text" name="grade" id="grade" required>
+    
+        <label for="remarks">Remarks:</label>
+        <textarea name="remarks" id="remarks"></textarea>
+    
+        <button type="submit">Submit</button>
+    </form>
 </div>
+
+
+
 </body>
 </html>

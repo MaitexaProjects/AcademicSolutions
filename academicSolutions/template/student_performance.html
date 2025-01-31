@@ -50,7 +50,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- <div class="container">
         {% block content %}
         <h2>Performance for {{ course.course_name }}</h2>
         <table>
@@ -74,6 +74,33 @@
             </tbody>
         </table>
         {% endblock %}
-    </div>
+    </div> -->
+
+<div>
+    <h2>{{ student.user.username }}'s Academic Performance</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Marks Obtained</th>
+            <th>Grade</th>
+            <th>Remarks</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for performance in performances %}
+            <tr>
+                <td>{{ performance.course.course_name }}</td>
+                <td>{{ performance.marks_obtained }}</td>
+                <td>{{ performance.grade }}</td>
+                <td>{{ performance.remarks }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+
 </body>
 </html>
