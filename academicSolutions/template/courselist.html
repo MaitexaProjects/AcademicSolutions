@@ -62,32 +62,48 @@
             font-size: 18px;
             color: #888;
         }
+
+        /* Add responsive scrolling for small screens */
+        @media (max-width: 600px) {
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                width: 100%;
+            }
+
+            table {
+                min-width: 600px; /* Ensures table is wide enough for scrolling */
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Course List</h1>
         {% if courses %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Course Name</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for course in courses %}
+            <!-- Wrap the table with a responsive container -->
+            <div class="table-responsive">
+                <table>
+                    <thead>
                         <tr>
-                            <td>{{ course.course_name }}</td>
-                            <td>{{ course.description }}</td>
-                            <td>{{ course.start_date }}</td>
-                            <td>{{ course.end_date }}</td>
+                            <th>Course Name</th>
+                            <th>Description</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                            <tr>
+                                <td>{{ course.course_name }}</td>
+                                <td>{{ course.description }}</td>
+                                <td>{{ course.start_date }}</td>
+                                <td>{{ course.end_date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% else %}
             <p class="no-courses">No courses available.</p>
         {% endif %}

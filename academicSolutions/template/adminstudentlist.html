@@ -55,6 +55,16 @@
         .table-bordered {
             border: 1px solid #ddd;
         }
+
+        /* Media query for screens less than 600px */
+        @media (max-width: 600px) {
+            .table-responsive {
+                overflow-x: auto; /* Add horizontal scrolling */
+            }
+            .table {
+                min-width: 600px; /* Ensure the table's minimum width for scrolling */
+            }
+        }
     </style>
 </head>
 <body>

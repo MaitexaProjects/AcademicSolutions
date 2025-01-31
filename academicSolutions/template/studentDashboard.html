@@ -185,21 +185,16 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
                         <li class="nav-item m-2">
-                            <a class="nav-link active text-white" href="#">Home</a>
+                            <a class="nav-link active text-white" href="{%url 'home' %}">Home</a>
                         </li>
                         <li class="nav-item m-2">
                             <a class="nav-link text-white" href="#">Login</a>
                         </li>
-                        <li class="nav-item m-2">
-                            <a class="nav-link text-white" href="#">View Courses</a>
-                        </li>
-                        <li class="nav-item m-2">
-                            <a class="nav-link text-white" href="#">View Facilities</a>
-                        </li>
+                       
                     </ul>
                     <ul>
                         <li class="nav-item m-2">
-                            <a class="nav-link text-white" href="#">Logout</a>
+                            <a class="nav-link text-white" href="{% url 'home' %}">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -221,9 +216,8 @@
                         <!-- <a href="{% url 'courselist' %}" class="card-title">View Courses</a> -->
                         <a href="{% url 'add_portfolio' %}" class="card-title">Add Portfolio</a>
                         <a href="{% url 'stdportfolio' %}" class="card-title">My portfolios</a>
-                        <a href="{% url 'studentresult' %}" class="card-title">My result</a>
-
-
+                        <a href="" class="card-title">My Attendance</a>
+                
 
                     </div>
                 </div>

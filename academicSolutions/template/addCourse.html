@@ -8,63 +8,209 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            font-family: 'Arial', sans-serif;
         }
+
         .container {
-            margin-top: 50px;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
             background-color: #ffffff;
-            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
         .form-label {
             font-weight: bold;
         }
+
         .form-control {
             border-radius: 5px;
+            box-shadow: none;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s ease;
         }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .form-control.error {
+            border-color: #dc3545;
+        }
+
+        .form-control.success {
+            border-color: #28a745;
+        }
+
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
             border-radius: 5px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
             border-color: #004085;
         }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin-top: 20px;
+            }
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h2 class="mb-4">Add New Course</h2>
-        <form method="POST" action="{% url 'addCourse' %}">
+        <h2>Add New Course</h2>
+        <form method="POST" action="{% url 'addCourse' %}" id="courseForm">
             {% csrf_token %}
+            
             <div class="mb-3">
                 <label for="courseName" class="form-label">Course Name</label>
                 <input type="text" class="form-control" id="courseName" name="course_name" placeholder="Enter course name" required>
+                <div class="error-message" id="courseNameError"></div>
             </div>
+
             <div class="mb-3">
                 <label for="courseDescription" class="form-label">Course Description</label>
                 <textarea class="form-control" id="courseDescription" name="description" rows="3" placeholder="Enter course description" required></textarea>
+                <div class="error-message" id="courseDescriptionError"></div>
             </div>
+
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="startDate" class="form-label">Start Date</label>
                     <input type="date" class="form-control" id="startDate" name="start_date" required>
+                    <div class="error-message" id="startDateError"></div>
                 </div>
+
                 <div class="col-md-6">
                     <label for="endDate" class="form-label">End Date</label>
                     <input type="date" class="form-control" id="endDate" name="end_date" required>
+                    <div class="error-message" id="endDateError"></div>
                 </div>
             </div>
+
             <div class="mb-3 mt-3">
                 <label for="duration" class="form-label">Duration (in weeks)</label>
-                <input type="number" class="form-control" id="duration" name="duration" placeholder="Enter duration" required>
+                <input type="number" class="form-control" id="duration" name="duration" placeholder="Enter duration" required min="1">
+                <div class="error-message" id="durationError"></div>
             </div>
+
             <button type="submit" class="btn btn-primary">Add Course</button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('courseForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+            let courseName = document.getElementById('courseName');
+            let courseDescription = document.getElementById('courseDescription');
+            let startDate = document.getElementById('startDate');
+            let endDate = document.getElementById('endDate');
+            let duration = document.getElementById('duration');
+
+            // Clear previous error messages
+            clearErrors();
+
+            // Course Name validation
+            if (courseName.value.trim() === '') {
+                showError(courseName, 'Course name is required.');
+                isValid = false;
+            } else {
+                showSuccess(courseName);
+            }
+
+            // Course Description validation
+            if (courseDescription.value.trim() === '') {
+                showError(courseDescription, 'Course description is required.');
+                isValid = false;
+            } else {
+                showSuccess(courseDescription);
+            }
+
+            // Start Date validation
+            if (startDate.value.trim() === '') {
+                showError(startDate, 'Start date is required.');
+                isValid = false;
+            } else {
+                showSuccess(startDate);
+            }
+
+            // End Date validation
+            if (endDate.value.trim() === '') {
+                showError(endDate, 'End date is required.');
+                isValid = false;
+            } else {
+                showSuccess(endDate);
+            }
+
+            // Duration validation
+            if (duration.value.trim() === '' || duration.value < 1) {
+                showError(duration, 'Duration should be at least 1 week.');
+                isValid = false;
+            } else {
+                showSuccess(duration);
+            }
+
+            if (isValid) {
+                this.submit();
+            }
+        });
+
+        function showError(input, message) {
+            const errorMessage = document.getElementById(input.id + 'Error');
+            errorMessage.textContent = message;
+            input.classList.add('error');
+        }
+
+        function showSuccess(input) {
+            const errorMessage = document.getElementById(input.id + 'Error');
+            errorMessage.textContent = '';
+            input.classList.add('success');
+        }
+
+        function clearErrors() {
+            let inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.classList.remove('error');
+                input.classList.remove('success');
+            });
+
+            let errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(message => {
+                message.textContent = '';
+            });
+        }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </body>
 </html>

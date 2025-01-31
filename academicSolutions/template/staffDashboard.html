@@ -89,64 +89,10 @@
             text-decoration: underline;
         }
 
-        .d-flex {
-            justify-content: center;
-            margin-top: 20px;
-        }
-
         .navbar-toggler-icon {
             background-color: white;
         }
 
-        .error {
-            color: #dc3545;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        /* Custom Card Styles */
-        .staff-card {
-            background-color: #ffffff;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-        }
-
-        .staff-card .card-body {
-            background-color: #f8f9fa;
-            border-radius: 15px;
-            padding: 40px;
-        }
-
-        .staff-card .card-text {
-            font-size: 1.2rem;
-            color: #444;
-        }
-
-        /* Hover Effects */
-        .card:hover {
-            transform: translateY(-15px);
-        }
-
-        /* Button Styles */
-        .btn-custom {
-            background-color: #007bff;
-            color: #fff;
-            padding: 12px 20px;
-            font-size: 1rem;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: 0.3s ease;
-        }
-
-        .btn-custom:hover {
-            background-color: #0056b3;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        /* Footer */
         .footer {
             background-color: #007bff;
             color: #ffffff;
@@ -162,11 +108,6 @@
             .navbar-nav {
                 text-align: center;
             }
-
-            .d-flex {
-                flex-direction: column;
-                align-items: center;
-            }
         }
     </style>
 </head>
@@ -178,63 +119,46 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">STAFF DASHBOARD</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarScroll">
-                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active text-white" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">View Courses</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">View Facilities</a>
+                            <a class="nav-link active text-white" href="{% url 'home' %}">Home</a>
                         </li>
                     </ul>
-                    <ul>
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">LogOut</a>
+                            <a class="nav-link text-white" href="{% url 'home' %}">LogOut</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        
 
         <!-- Dashboard Content -->
         <div class="container mt-5">
-            <h3 class="card-text text-center">{{ user }}</h3>
-
-            <div class="d-flex justify-content-center">
-                <div class="card" style="width: 60rem;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Manage Students</h5>
-                        <a href="{% url 'attendance_report' %}" class="card-text btn-custom" >View Attendance Details</a>
-
-                        <a href="{% url 'courselist' %}" class="card-text btn-custom">View Courses</a>
-                        <a href="{% url 'portfoliolist' %}" class="card-text btn-custom">View Portfolios</a>
-                        <a href="{% url 'studentList' %}" class="card-text btn-custom">Mark Student Attendance</a>
-                        <a href="{% url 'adminstudentlist' %}" class="card-text btn-custom">View Student List</a>
-                        <a href="{% url 'add_academic_marks' course_id=course.id %}" class="card-text btn-custom">Add Mark</a>
-                        <a href="{% url 'performance_report' %}" class="card-text btn-custom">View Result</a>
-                        
-   
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10 col-sm-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Manage Students</h5>
+                            <a href="{% url 'attendance_report' %}" class="card-text btn btn-primary w-100 mb-2 text-white text-decoration-none">View Attendance Details</a>
+                            <a href="{% url 'courselist' %}" class="card-text btn btn-primary w-100 mb-2 text-white text-decoration-none" >View Courses</a>
+                            <a href="{% url 'portfoliolist' %}" class="card-text btn btn-primary w-100 mb-2 text-white text-decoration-none">View Portfolios</a>
+                            <a href="{% url 'studentList' %}" class="card-text btn btn-primary w-100 mb-2 text-white text-decoration-none">Mark Student Attendance</a>
+                            <a href="{% url 'adminstudentlist' %}" class="card-text btn btn-primary w-100 mb-2 text-white text-decoration-none">View Student List</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- Footer -->
-    <!-- <div class="footer" style="margin-top: 13rem">
-        <p>&copy; 2025 Educational Management System | All Rights Reserved</p>
-    </div> -->
+   
 
     <script src="{% static 'js/script.js' %}"></script>
 </body>

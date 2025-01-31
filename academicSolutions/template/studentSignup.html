@@ -73,13 +73,76 @@
             font-size: 1rem;
         }
     </style>
+
+    <script>
+        // JavaScript for form validation
+        function validateForm(event) {
+            const username = document.getElementById('Username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('inputPassword').value;
+            const course = document.getElementById('course').value;
+            const number = document.getElementById('number').value;
+            const district = document.getElementById('district').value;
+            const place = document.getElementById('place').value;
+            const pin = document.getElementById('pin').value;
+
+            let errorMessage = '';
+
+            // Username validation (cannot be empty)
+            if (username === '') {
+                errorMessage += 'Username is required.<br>';
+            }
+
+            // Email validation (check if valid email)
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!email.match(emailPattern)) {
+                errorMessage += 'Please enter a valid email.<br>';
+            }
+
+            // Password validation (minimum 6 characters)
+            if (password.length < 6) {
+                errorMessage += 'Password should be at least 6 characters.<br>';
+            }
+
+            // Course validation (cannot be empty)
+            if (course === '') {
+                errorMessage += 'Course is required.<br>';
+            }
+
+            // Number validation (should be a number)
+            if (isNaN(number) || number <= 0) {
+                errorMessage += 'Please enter a valid phone number.<br>';
+            }
+
+            // District validation (cannot be empty)
+            if (district === '') {
+                errorMessage += 'District is required.<br>';
+            }
+
+            // Place validation (cannot be empty)
+            if (place === '') {
+                errorMessage += 'Place is required.<br>';
+            }
+
+            // Pin validation (should be a valid pin code)
+            if (isNaN(pin) || pin.length !== 6) {
+                errorMessage += 'Please enter a valid 6-digit pin code.<br>';
+            }
+
+            if (errorMessage !== '') {
+                document.getElementById('error-message').innerHTML = errorMessage;
+                event.preventDefault(); // Prevent form submission if validation fails
+            }
+        }
+    </script>
 </head>
+
 <body>
 
     <div class="container">
         <h1>Register</h1>
 
-        <form method='post' action="{% url 'studentSignup' %}">
+        <form method='post' action="{% url 'studentSignup' %}" onsubmit="validateForm(event)">
             {% csrf_token %}
 
             <div class="row">
@@ -129,6 +192,8 @@
                     <input type="number" class="form-control" name="pin" id="pin" placeholder="Pin" required>
                 </div>
             </div>
+
+            <div id="error-message" class="error-message"></div>
 
             {% if error %}
                 <p class="error-message">{{ error }}</p>

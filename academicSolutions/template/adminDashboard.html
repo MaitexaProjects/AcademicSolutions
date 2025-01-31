@@ -107,6 +107,7 @@
             text-align: center;
             margin-top: 50px;
         }
+        
     </style>
 </head>
 <body>
@@ -120,13 +121,16 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item m-2">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
                         </li>
                         <li class="nav-item m-2">
-                            <a class="nav-link" href="#">Login</a>
+                            <!-- <a class="nav-link" href="{% url 'adminlogin' %}">Login</a> -->
                         </li>
-                        <li class="nav-item m-2">
-                            <a class="nav-link" href="#">Add Courses</a>
+                        <!-- <li class="nav-item m-2">
+                            <a class="nav-link" href="">Login</a>
+                        </li> -->
+                        <!-- <li class="nav-item m-2">
+                            <a class="nav-link" href="{% url 'home' %}">Add Courses</a>
                         </li>
                         <li class="nav-item m-2">
                             <a class="nav-link" href="#">Add Facilities</a>
@@ -136,11 +140,11 @@
                         </li>
                         <li class="nav-item m-2">
                             <a class="nav-link" href="#">Teachers Info</a>
-                        </li>
+                        </li> -->
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item m-2">
-                            <a class="nav-link" href="#">LogOut</a>
+                            <a class="nav-link" href="{% url 'home' %}">LogOut</a>
                         </li>
                     </ul>
                 </div>
@@ -154,10 +158,10 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Manage Students</h5>
-                            <a href="{% url 'studentSignup' %}"  class="btn btn-primary">Add Student</a><br>
-                            <a href="{% url 'adminstudentlist' %}" class="btn btn-primary">View Student List</a><br>
-                            <a href="{% url 'portfoliolist' %}" class="btn btn-primary">View All Portfolios</a><br>
-                            <a href="" class="btn btn-primary">View Attendance</a><br>
+                            <a href="{% url 'studentSignup' %}"  class="btn btn-primary  text-decoration-none">Add Student</a><br>
+                            <a href="{% url 'adminstudentlist' %}" class="btn btn-primary text-decoration-none">View Student List</a><br>
+                            <a href="{% url 'portfoliolist' %}" class="btn btn-primary text-decoration-none">View All Portfolios</a><br>
+                            <a href="{% url 'attendance_report' %}" class="btn btn-primary text-decoration-none">View Attendance</a><br>
                            
                         </div>
                     </div>
@@ -168,8 +172,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Manage Staff</h5>
-                            <a href="{% url 'staffSignup' %}"  class="btn btn-primary">Add Staff</a><br>
-                            <a href="{% url 'adminstafflist' %}"  class="btn btn-primary">View Staff</a><br>
+                            <a href="{% url 'staffSignup' %}"  class="btn btn-primary text-decoration-none">Add Staff</a><br>
+                            <a href="{% url 'adminstafflist' %}"  class="btn btn-primary text-decoration-none">View Staff</a><br>
                            
                         </div>
                     </div>
@@ -180,8 +184,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Manage Courses</h5>
-                            <a href="{% url 'courselist' %}"  class="btn btn-primary">View Courses</a><br>
-                            <a href="{% url 'addCourse' %}"  class="btn btn-primary">Add Courses</a><br>
+                            <a href="{% url 'courselist' %}"  class="btn btn-primary text-decoration-none">View Courses</a><br>
+                            <a href="{% url 'addCourse' %}"  class="btn btn-primary text-decoration-none">Add Courses</a><br>
                             
                         </div>
                     </div>

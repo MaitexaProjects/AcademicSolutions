@@ -7,6 +7,8 @@ from django.contrib import messages
 from datetime import date
 from .forms import PortfolioForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
+from decimal import Decimal, InvalidOperation
 
 
 
@@ -234,23 +236,29 @@ def markattendance(request):
 
 
 
+
+
+
 def attendance_report(request):
+    student_name_filter = request.GET.get('student_name', '')  
+
+   
+    attendance_records = Attendance.objects.all()
+
+   
+    if student_name_filter:
+        attendance_records = attendance_records.filter(student__user__username__icontains=student_name_filter)
 
     students = AcademiApp.objects.filter(role='student')
-    
- 
-    attendance_data = {}
-    
-   
-    
-    
-    attendance_records = Attendance.objects.all().order_by('date') 
-    
- 
+
     return render(request, 'attendanceReport.html', {
-        'attendance_data': attendance_records, 
-        'students': students
+        'attendance_records': attendance_records,
+        'students': students, 
+        'student_name_filter': student_name_filter,  
     })
+
+
+
 
 
 @login_required 
@@ -303,6 +311,22 @@ def adminstafflist(request):
     staff = AcademiApp.objects.filter(role='staff')
     
     return render(request, 'adminstafflist.html', {'staff': staff})
+
+
+
+@login_required
+def student_attendance_report(request):
+    """Display all attendance records for the logged-in student."""
+    student = request.user 
+    attendance_records = Attendance.objects.filter(student__user=student).order_by('-date')
+
+    return render(request, 'attendance_report.html', {
+        'student': student,
+        'attendance_records': attendance_records
+    })
+
+
+
 
 
 

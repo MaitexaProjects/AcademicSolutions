@@ -25,6 +25,8 @@ urlpatterns = [
     path('adminstudentlist/',views.adminstudentlist,name='adminstudentlist'),
     path('adminstafflist/',views.adminstafflist,name='adminstafflist'),
    
+   
+   
     
 ]
 
