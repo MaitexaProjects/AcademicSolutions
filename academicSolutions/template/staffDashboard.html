@@ -220,13 +220,10 @@
                         <a href="{% url 'portfoliolist' %}" class="card-text btn-custom">View Portfolios</a>
                         <a href="{% url 'studentList' %}" class="card-text btn-custom">Mark Student Attendance</a>
                         <a href="{% url 'adminstudentlist' %}" class="card-text btn-custom">View Student List</a>
-                        <a href="{% url 'addmark' %}" class="card-text btn-custom">Add Mark</a>
-
-                        <!-- <a href="{% url 'addmark' %}" class="card-text btn-custom">Add Mark</a> -->
-
-
-
+                        <a href="{% url 'add_academic_marks' course_id=course.id %}" class="card-text btn-custom">Add Mark</a>
+                        <a href="{% url 'performance_report' %}" class="card-text btn-custom">View Result</a>
                         
+   
                     </div>
                 </div>
             </div>
@@ -235,9 +232,9 @@
     </div>
 
     <!-- Footer -->
-    <div class="footer">
+    <!-- <div class="footer" style="margin-top: 13rem">
         <p>&copy; 2025 Educational Management System | All Rights Reserved</p>
-    </div>
+    </div> -->
 
     <script src="{% static 'js/script.js' %}"></script>
 </body>

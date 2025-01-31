@@ -141,7 +141,6 @@ def addCourse(request):
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         duration = request.POST.get('duration')
-        # faculty_in_charge = request.POST.get('faculty_in_charge')
 
         if not course_name or not description or not start_date or not end_date :
             messages.error(request, "All fields are required.")
@@ -151,7 +150,6 @@ def addCourse(request):
             start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
             end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
 
-            # faculty_in_charge = Faculty.objects.get(id=faculty_in_charge)
 
 
             Course.objects.create(
@@ -160,7 +158,6 @@ def addCourse(request):
                 start_date=start_date,
                 end_date=end_date,
                 duration=duration,
-                # faculty_in_charge=faculty_in_charge
                 )
             
             messages.success(request, "Course added successfully!")
@@ -189,7 +186,7 @@ def studentList(request):
         'total_students': total_students,
     }
     
-    return render(request, 'studentList.html', context)
+    return render(request, 'studentlist.html', context)
 
 
 
@@ -300,120 +297,12 @@ def adminstudentlist(request):
     return render(request, 'adminstudentlist.html', {'students': students})
 
 
+
 def adminstafflist(request):
 
     staff = AcademiApp.objects.filter(role='staff')
     
     return render(request, 'adminstafflist.html', {'staff': staff})
-
-
-
-
-
-
-# def addmark(request):
-#     if request.method == 'POST':
-#         student_id = request.POST.get('student')
-#         course_id = request.POST.get('course')
-#         marks_obtained = request.POST.get('marks_obtained')
-#         total_marks = request.POST.get('total_marks')
-#         exam_date = request.POST.get('exam_date')
-
-#         try:
-#             student = AcademiApp.objects.get(id=student_id, role='student')
-#             course = Course.objects.get(id=course_id)
-
-#             # Create a new Marks record
-#             Marks.objects.create(
-#                 student=student,
-#                 course=course,
-#                 marks_obtained=marks_obtained,
-#                 total_marks=total_marks,
-#                 exam_date=exam_date
-#             )
-
-#             messages.success(request, "Marks added successfully!")
-#             return redirect('marklist',course_id=course_id)
-
-
-#         except AcademiApp.DoesNotExist:
-#             messages.error(request, "Student not found.")
-#         except Course.DoesNotExist:
-#             messages.error(request, "Course not found.")
-#         except Exception as e:
-#             messages.error(request, f"An error occurred: {str(e)}")
-
-#     students = AcademiApp.objects.filter(role='student')
-#     courses = Course.objects.all()
-
-#     return render(request, 'addmark.html', {'students': students, 'courses': courses})
-  
-
-
-
-
-
-# def marklist(request, course_id):
-#     course = Course.objects.get(id=course_id)
-#     marks = Marks.objects.filter(course=course)
-#     performance = {}
-
-#     for mark in marks:
-#         student = mark.student
-#         if student not in performance:
-#             performance[student] = {'total_marks': 0, 'marks_obtained': 0}
-#         performance[student]['total_marks'] += mark.total_marks
-#         performance[student]['marks_obtained'] += mark.marks_obtained
-
-#     for student, data in performance.items():
-#         data['percentage'] = (data['marks_obtained'] / data['total_marks']) * 100 if data['total_marks'] > 0 else 0
-
-#     return render(request, 'marklist.html', {'course': course, 'performance': performance})
-
-
-
-
-
-
-def add_academic_performance(request):
-    if request.method == 'POST':
-        student_id = request.POST.get('student')
-        course_id = request.POST.get('course')
-        marks_obtained = request.POST.get('marks_obtained')
-        grade = request.POST.get('grade')
-        remarks = request.POST.get('remarks')
-
-        try:
-            student = AcademiApp.objects.get(id=student_id, role='student')
-            course = Course.objects.get(id=course_id)
-
-            AcademicPerformance.objects.create(
-                student=student,
-                course=course,
-                marks_obtained=marks_obtained,
-                grade=grade,
-                remarks=remarks
-            )
-            return redirect('student_performance')  # Redirect to a success page or another view
-
-        except Exception as e:
-            return render(request, 'add_academic_performance.html', {'error': str(e)})
-
-    else:
-        students = AcademiApp.objects.filter(role='student')
-        courses = Course.objects.all()
-        return render(request, 'add_academic_performance.html', {'students': students, 'courses': courses})
-    
-
-
-# def student_performance(request, student_id):
-#     student = AcademiApp.objects.get(id=student_id, role='student')
-#     performances = AcademicPerformance.objects.filter(student=student)
-
-#     return render(request, 'student_performance.html', {'student': student, 'performances': performances})
-
-
-
 
 
 

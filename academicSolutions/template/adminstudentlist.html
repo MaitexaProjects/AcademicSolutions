@@ -60,30 +60,33 @@
 <body>
     <div class="container">
         <h1 class="mt-4">Student List</h1>
-        <table class="table table-bordered mt-4">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th>Course</th>
-                    <th>Place</th>
-                    <th>District</th>
-                    <th>Pin</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for student in students %}
+        <!-- Wrap the table with table-responsive class to enable horizontal scrolling -->
+        <div class="table-responsive">
+            <table class="table table-bordered mt-4">
+                <thead>
                     <tr>
-                        <td>{{ student.user.username }}</td>
-                        <td>{{ student.get_role_display }}</td>
-                        <td>{{ student.course }}</td>
-                        <td>{{ student.place }}</td>
-                        <td>{{ student.district }}</td>
-                        <td>{{ student.pin }}</td>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Course</th>
+                        <th>Place</th>
+                        <th>District</th>
+                        <th>Pin</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.user.username }}</td>
+                            <td>{{ student.get_role_display }}</td>
+                            <td>{{ student.course }}</td>
+                            <td>{{ student.place }}</td>
+                            <td>{{ student.district }}</td>
+                            <td>{{ student.pin }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
