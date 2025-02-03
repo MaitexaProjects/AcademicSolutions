@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending User Approvals</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        button[type="submit"]:active {
+            background-color: #3e8e41;
+        }
+
+        button[name="Reject"] {
+            background-color: #f44336;
+        }
+
+        button[name="Reject"]:hover {
+            background-color: #da190b;
+        }
+
+        button[name="Reject"]:active {
+            background-color: #c21807;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 28px;
+            }
+
+            table {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            button {
+                padding: 6px 12px;
+            }
+        }
+
+        /* Adding Scrollbar for table on screens less than 600px */
+        @media (max-width: 600px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            th, td {
+                min-width: 150px; /* Minimum width for each cell */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Pending User Approvals</h2>
+    {% if pending_users %}
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Approve</th>
+                    <th>Reject</th>
+                </tr>
+                {% for user in pending_users %}
+                    <tr>
+                        <td>{{ user.user.username }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>
+                            <button type="submit" name="action" value="Approve" formaction="{% url 'Approverequest' user.id %}">Approve</button>
+                        </td>
+                        <td>
+                            <button type="submit" name="action" value="Reject" formaction="{% url 'Approverequest' user.id %}">Reject</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </form>
+    {% else %}
+        <p>No pending approvals.</p>
+    {% endif %}
+</body>
+</html>

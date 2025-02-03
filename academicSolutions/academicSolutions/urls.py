@@ -16,11 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from academiApp import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('academiApp.urls')),
+     path('admin-approve-requests', views.adminApproveRequests, name='adminApproveRequests'),
 
 ]
 

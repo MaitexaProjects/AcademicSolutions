@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import *
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login as log
+from django.contrib.auth import authenticate,login as auth_login
 from datetime import datetime
 from django.contrib import messages
 from datetime import date
@@ -12,6 +12,7 @@ from decimal import Decimal, InvalidOperation
 
 
 
+
 # Create your views here.
 
 
@@ -19,59 +20,106 @@ def home(request):
     return render(request,'home.html')
 
 
+
+
+def create_user_and_profile(username, email, password, role, number, course, district, place, pin):
+    try:
+        user = User.objects.create_user(username=username, email=email, password=password)
+        AcademiApp.objects.create(
+            user=user,
+            role=role,
+            number=number,
+            course=course,
+            district=district,
+            place=place,
+            pin=pin,
+            status='pending'  # Default to pending approval
+        )
+        return user
+    except Exception as e:
+        print(f"Error creating user and profile: {e}")
+        return None
+
+
 def studentSignup(request):
     if request.method == 'POST':
-        username=request.POST.get('Username')
-        email=request.POST.get('email')
-        password=request.POST.get('password')
-        number=request.POST.get('number')
-        course=request.POST.get('course')
-        district=request.POST.get('district')
-        place=request.POST.get('place')
-        pin=request.POST.get('pin')
-        print(email)
-        
-       
-        try:
-            user=User.objects.create_user(username=username,email=email,password=password)
-            AcademiApp.objects.create(user=user,role='student',number=number,course=course,district=district,place=place,pin=pin)
-            print(user)   
-            # login(request, user)
+        username = request.POST.get('Username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        number = request.POST.get('number')
+        course = request.POST.get('course')
+        district = request.POST.get('district')
+        place = request.POST.get('place')
+        pin = request.POST.get('pin')
 
-            return redirect('login')  
-            
-        except Exception as e:
-            print(e)
+        user = create_user_and_profile(username, email, password, 'student', number, course, district, place, pin)
+
+        if user:
+            # Set status to 'pending'
+            AcademiApp.objects.filter(user=user).update(status='pending')
+            return redirect('login')
+        else:
             return render(request, 'studentSignup.html', {'error': 'User not created. Please try again.'})
-        
-    return render(request,'studentSignup.html')
+
+    return render(request, 'studentSignup.html')
 
 
 
 def staffSignup(request):
     if request.method == 'POST':
-        username=request.POST.get('Username')
-        email=request.POST.get('email')
-        password=request.POST.get('password')
-        number=request.POST.get('number')
-        district=request.POST.get('district')
-        place=request.POST.get('place')
-        pin=request.POST.get('pin')
+        username = request.POST.get('Username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        number = request.POST.get('number')
+        district = request.POST.get('district')
+        place = request.POST.get('place')
+        pin = request.POST.get('pin')
 
-        print(password)
+        user = create_user_and_profile(username, email, password, 'staff', number, None, district, place, pin)
+
+        if user:
+            # Set status to 'pending'
+            AcademiApp.objects.filter(user=user).update(status='pending')
+            return redirect('login')
+        else:
+            return render(request, 'staffSignup.html', {'error': 'User not created. Please try again.'})
+
+    return render(request, 'staffSignup.html')
+
+
+
+
+def adminApproveRequests(request):
+    if not request.user.is_superuser:
+        return redirect('adminlogin')
+
+    pending_users = AcademiApp.objects.filter(status='pending')
+
+    return render(request, 'adminApproveRequests.html', {'pending_users': pending_users})
+
+
+def Approverequest(request,user_id):
+    
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+
+        print(f"User ID: {user_id}, Action: {action}")  # Debugging output
 
         try:
-            user=User.objects.create_user(username=username,email=email,password=password)
-            AcademiApp.objects.create(user=user,role='staff',number=number,district=district,place=place,pin=pin)
-            print(f"User created: {user}")
-            # login(request, user)
-            return redirect('login')  
-            
-        except Exception as e:
-            print(e)
-            return render(request, 'staffSignup.html', {'error': 'User not created. Please try again.'})
-        
-    return render(request,'staffSignup.html')
+            user_profile = AcademiApp.objects.get(id=user_id)
+            if action == 'Approve':
+                user_profile.status = 'approved'
+            elif action == 'Reject':
+                user_profile.status = 'rejected'
+            user_profile.save()
+        except AcademiApp.DoesNotExist:
+            pass  # Handle error if the user is not found
+
+        return redirect('adminApproveRequests')
+
+    return render(request, 'adminApproveRequests.html')
+
 
 
 
@@ -85,15 +133,18 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
-            log(request,user)
-            
             try:
-                user_profile = AcademiApp.objects.get(user=user) 
-                role = user_profile.role 
+                user_profile = AcademiApp.objects.get(user=user)  # Get the user profile
                 
-                if role == 'student':
+                if user_profile.status != 'approved':  # Ensure the user is approved by admin
+                    return render(request, 'login.html', {'error': 'Your account is pending approval by the admin.'})
+
+                auth_login(request, user)  # Log the user in
+                
+                # Redirect based on role
+                if user_profile.role == 'student':
                     return redirect('studentDashboard') 
-                elif role == 'staff':
+                elif user_profile.role == 'staff':
                     return redirect('staffDashboard') 
                 else:
                     return redirect('adminDashboard') 
@@ -102,7 +153,6 @@ def login(request):
                 return render(request, 'login.html', {'error': 'User profile not found.'})
             
         else:
-           
             return render(request, 'login.html', {'error': 'Invalid username or password.'})
     
     return render(request, 'login.html')
@@ -127,10 +177,12 @@ def adminlogin(request):
     if request.method=='POST':
         username = request.POST.get('Username')
         password = request.POST.get('password')
-        try:
-            if username=='admin' and password=='adminacademic':
-                return redirect('adminDashboard')
-        except:
+
+        user=authenticate(username=username,password=password)
+        if user:
+            auth_login(request,user)
+            return redirect('adminDashboard')
+        else:
             return redirect('adminlogin',{'error':"username password incorrect"})
 
     return render(request,'adminlogin.html')
@@ -315,16 +367,17 @@ def adminstafflist(request):
 
 
 @login_required
-def student_attendance_report(request):
+def studentattendance(request):
     """Display all attendance records for the logged-in student."""
     student = request.user 
+    print(student)
     attendance_records = Attendance.objects.filter(student__user=student).order_by('-date')
-
-    return render(request, 'attendance_report.html', {
+    print(attendance_records)
+    return render(request, 'stdattendance_report.html', {
         'student': student,
         'attendance_records': attendance_records
     })
-
+    
 
 
 

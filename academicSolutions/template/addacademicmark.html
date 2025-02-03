@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <label for="student">Student:</label>
+        <select name="student_id" required>
+            {% for student in students %}
+            <option value="{{ student.id }}">{{ student.user.username }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="course">Course:</label>
+        <select name="course_id" required>
+            {% for course in courses %}
+            <option value="{{ course.id }}">{{ course.course_name }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="marks">Marks:</label>
+        <input type="number" name="marks" required>
+    
+        <label for="grade">Grade:</label>
+        <input type="text" name="grade" required>
+    
+        <label for="remarks">Remarks:</label>
+        <textarea name="remarks"></textarea>
+    
+        <button type="submit">Add Academic Record</button>
+    </form>
+</body>
+</html>

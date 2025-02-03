@@ -24,6 +24,15 @@ urlpatterns = [
     path('stdportfolio/',views.stdportfolio,name='stdportfolio'),
     path('adminstudentlist/',views.adminstudentlist,name='adminstudentlist'),
     path('adminstafflist/',views.adminstafflist,name='adminstafflist'),
+    path('admin-approve-requests/', views.adminApproveRequests, name='adminApproveRequests'),
+    path('Approverequest/<int:user_id>/', views.Approverequest, name='Approverequest'),
+    path('studentattendance/', views.studentattendance, name='studentattendance'),
+    
+    # path('addmark/',views.addmark,name='addmark')
+    # path('academic/add_marks/<int:student_id>/<int:course_id>/', views.add_academic_marks,name='add_academic_marks'),
+
+    # path('adacademicmark/', views.adacademicmark, name='adacademicmark'),
+
    
    
    

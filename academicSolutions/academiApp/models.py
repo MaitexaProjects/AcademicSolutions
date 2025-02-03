@@ -6,16 +6,17 @@ from datetime import date
 
 
 class AcademiApp(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
-    role= models.CharField(max_length=100 ,choices=[('student', 'Student'), ('staff', 'Staff'), ('admin', 'Admin')], default='student')
-    course=models.CharField(max_length=100,null=True,blank=True)
-    number=models.IntegerField(null=True,blank=True)
-    place=models.CharField(max_length=100,null=True,blank=True)
-    district=models.CharField(max_length=100,null=True,blank=True)
-    pin=models.CharField(max_length=100,null=True,blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    role = models.CharField(max_length=100, choices=[('student', 'Student'), ('staff', 'Staff'), ('admin', 'Admin')], default='student')
+    course = models.CharField(max_length=100, null=True, blank=True)
+    number = models.IntegerField(null=True, blank=True)
+    place = models.CharField(max_length=100, null=True, blank=True)
+    district = models.CharField(max_length=100, null=True, blank=True)
+    pin = models.CharField(max_length=100, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')], default='pending') 
+
     def __str__(self):
         return self.user.username
-
 
 class Course(models.Model):
     course_name = models.CharField(max_length=200)
@@ -51,10 +52,13 @@ class Portfolio(models.Model):
 
     def __str__(self):
         return self.title
-
-
-
     
+
+
+
+
+
+
 
 
 
