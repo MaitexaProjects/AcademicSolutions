@@ -55,6 +55,26 @@ class Portfolio(models.Model):
     
 
 
+class Facility(models.Model):
+    FACILITY_CHOICES = [
+        ('library', 'Library'),
+        ('lab', 'Laboratory'),
+        ('sports', 'Sports Complex'),
+        ('canteen', 'Canteen'),
+        ('auditorium', 'Auditorium'),
+        # You can add more facilities as needed
+    ]
+    
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    facility_type = models.CharField(max_length=50, choices=FACILITY_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+    
+
+
 
 
 

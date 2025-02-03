@@ -5,10 +5,10 @@ from django.contrib.auth import authenticate,login as auth_login
 from datetime import datetime
 from django.contrib import messages
 from datetime import date
-from .forms import PortfolioForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from decimal import Decimal, InvalidOperation
+from .forms import FacilityForm
 
 
 
@@ -379,6 +379,30 @@ def studentattendance(request):
     })
     
 
+@login_required
+def add_facility(request):
+    if not request.user.is_superuser:
+        messages.error(request, "You are not authorized to add facilities.")
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = FacilityForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Facility added successfully!")
+            return redirect('admin_dashboard')  # Redirect to admin dashboard or facility list
+        else:
+            messages.error(request, "There was an error adding the facility.")
+    else:
+        form = FacilityForm()
+
+    return render(request, 'add_facility.html', {'form': form})
+
+# View for Students to See Facilities
+@login_required
+def view_facilities(request):
+    facilities = Facility.objects.all()
+    return render(request, 'view_facilities.html', {'facilities': facilities})
 
 
 

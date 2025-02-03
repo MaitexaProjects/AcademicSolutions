@@ -96,7 +96,7 @@
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Course</th>
+                    <!-- <th>Course</th> -->
                     <th>Status</th> <!-- 'Present', 'Absent', etc. -->
                 </tr>
             </thead>
@@ -104,8 +104,16 @@
                 {% for record in attendance_records %}
                     <tr>
                         <td>{{ record.date }}</td> <!-- Date of the attendance -->
-                        <td>{{ record.course.name }}</td> <!-- Course name -->
-                        <td>{{ record.status }}</td> <!-- Attendance status (e.g. 'Present', 'Absent') -->
+
+                        <td>
+                            {% if record.is_present %}
+                            <span class="text-success">Present</span>
+                        {% else %}
+                            <span class="text-danger">Absent</span>
+                        {% endif %}
+                        </td> <!-- Attendance status (e.g. 'Present', 'Absent') -->
+                        <!-- <td>{{ record.course.name }}</td>  -->
+                        
                     </tr>
                 {% empty %}
                     <tr>

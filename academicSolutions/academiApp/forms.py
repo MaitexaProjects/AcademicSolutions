@@ -1,8 +1,7 @@
 from django import forms
-from .models import Portfolio
+from .models import Facility
 
-class PortfolioForm(forms.ModelForm):
+class FacilityForm(forms.ModelForm):
     class Meta:
-        model = Portfolio
-        fields = ['title', 'description', 'document', 'image']
-
+        model = Facility
+        fields = ['name', 'description', 'facility_type']
