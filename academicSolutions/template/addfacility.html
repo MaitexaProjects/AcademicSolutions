@@ -1,27 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Facility</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
+
 <body>
     <div class="container mt-4">
         <h2>Add Facility</h2>
+
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">{{ message }}</div>
             {% endfor %}
         {% endif %}
 
-        <form method="post">
+        <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="mb-3">
+                <label for="id_name" class="form-label">Facility Name:</label>
+                <input type="text" id="id_name" name="name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_description" class="form-label">Description:</label>
+                <textarea id="id_description" name="description" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_facility_type" class="form-label">Facility Type:</label>
+                <select id="id_facility_type" name="facility_type" class="form-control" required>
+                    <option value="library">Library</option>
+                    <option value="lab">Laboratory</option>
+                    <option value="sports">Sports Complex</option>
+                    <option value="canteen">Canteen</option>
+                    <option value="auditorium">Auditorium</option>
+                </select>
+            </div>
+
             <button type="submit" class="btn btn-primary">Add Facility</button>
         </form>
+
         <br>
-        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+        <a href="{% url 'adminDashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
     </div>
 </body>
+
 </html>

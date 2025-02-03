@@ -5,10 +5,11 @@ from django.contrib.auth import authenticate,login as auth_login
 from datetime import datetime
 from django.contrib import messages
 from datetime import date
+from .forms import PortfolioForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from decimal import Decimal, InvalidOperation
-from .forms import FacilityForm
+# from .forms import FacilityForm
 
 
 
@@ -379,31 +380,36 @@ def studentattendance(request):
     })
     
 
+
 @login_required
 def add_facility(request):
-    if not request.user.is_superuser:
+    if not request.user.is_superuser:  # Check if the user is admin
         messages.error(request, "You are not authorized to add facilities.")
-        return redirect('home')
+        return redirect('adminlogin')
 
     if request.method == 'POST':
-        form = FacilityForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Facility added successfully!")
-            return redirect('admin_dashboard')  # Redirect to admin dashboard or facility list
-        else:
-            messages.error(request, "There was an error adding the facility.")
-    else:
-        form = FacilityForm()
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        facility_type = request.POST.get('facility_type')
 
-    return render(request, 'add_facility.html', {'form': form})
+        if name and description and facility_type:
+            Facility.objects.create(
+                name=name,
+                description=description,
+                facility_type=facility_type
+            )
+            messages.success(request, "Facility added successfully!")
+            return redirect('adminDashboard')  # Redirect to the admin dashboard or the facility list page
+        else:
+            messages.error(request, "All fields are required!")
+
+    return render(request, 'addfacility.html')
 
 # View for Students to See Facilities
 @login_required
 def view_facilities(request):
     facilities = Facility.objects.all()
-    return render(request, 'view_facilities.html', {'facilities': facilities})
-
+    return render(request, 'viewfacility.html', {'facilities': facilities})
 
 
 
