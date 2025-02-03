@@ -415,11 +415,61 @@ def view_facilities(request):
 
 
 
+@login_required
+def addacademicrecord(request):
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id')
+        subject = request.POST.get('subject')
+        marks = request.POST.get('marks')
+        remarks = request.POST.get('remarks')
+        performance = request.POST.get('performance')
+
+        # Validate required fields
+        if not student_id or not subject or not marks or not performance:
+            messages.error(request, "All fields except remarks are required.")
+            return redirect('addacademicrecord')
+
+        try:
+            student = AcademiApp.objects.get(id=student_id, role='student').user  # Ensure it's a student
+            marks = float(marks)  # Convert marks to float
+
+            AcademicRecord.objects.create(
+                student=student,
+                subject=subject,
+                marks=marks,
+                remarks=remarks,
+                performance=performance
+            )
+
+            messages.success(request, f"Academic record added successfully for {student.username}!")
+            return redirect('academicrecordlist')  
+
+        except AcademiApp.DoesNotExist:
+            messages.error(request, "Student not found.")
+            return redirect('addacademicrecord')
+
+    students = AcademiApp.objects.filter(role='student')  # Fetch students
+    return render(request, 'addAcademicRecord.html', {'students': students})
 
 
 
 
+@login_required
+def academicrecordlist(request):
+    records = AcademicRecord.objects.all()
+    return render(request, 'academicRecordList.html', {'records': records})
 
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import AcademicRecord
+
+@login_required
+def studentacademicrecords(request):
+    # Get only the logged-in student's records
+    student_records = AcademicRecord.objects.filter(student=request.user)
+
+    return render(request, 'stdAcademicmark.html', {'records': student_records})
 
 
 

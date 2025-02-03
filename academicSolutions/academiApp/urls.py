@@ -27,11 +27,13 @@ urlpatterns = [
     path('admin-approve-requests/', views.adminApproveRequests, name='adminApproveRequests'),
     path('Approverequest/<int:user_id>/', views.Approverequest, name='Approverequest'),
     path('studentattendance/', views.studentattendance, name='studentattendance'),
-     path('add-facility/', views.add_facility, name='addfacility'),  # Admin
+    path('add-facility/', views.add_facility, name='addfacility'),  # Admin
     path('view-facilities/', views.view_facilities, name='viewfacilities'), 
-    
-    
-   
+    path('addacademicrecord/', views.addacademicrecord, name='addacademicrecord'), 
+    path('academicrecordlist/', views.academicrecordlist, name='academicrecordlist'), 
+    path('studentacademicrecords/', views.studentacademicrecords, name='studentacademicrecords'),
+
+  
    
     
 ]

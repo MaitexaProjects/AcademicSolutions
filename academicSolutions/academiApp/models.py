@@ -75,6 +75,24 @@ class Facility(models.Model):
     
 
 
+class AcademicRecord(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'academiapp__role': 'student'})
+    subject = models.CharField(max_length=200)
+    marks = models.FloatField()
+    remarks = models.TextField(blank=True, null=True)
+    performance = models.CharField(max_length=100, choices=[
+        ('excellent', 'Excellent'),
+        ('good', 'Good'),
+        ('average', 'Average'),
+        ('poor', 'Poor')
+    ])
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.student.username} - {self.subject} - {self.marks}"
+    
+
+
 
 
 
