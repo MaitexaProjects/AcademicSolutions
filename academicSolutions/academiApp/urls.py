@@ -28,12 +28,7 @@ urlpatterns = [
     path('Approverequest/<int:user_id>/', views.Approverequest, name='Approverequest'),
     path('studentattendance/', views.studentattendance, name='studentattendance'),
     
-    # path('addmark/',views.addmark,name='addmark')
-    # path('academic/add_marks/<int:student_id>/<int:course_id>/', views.add_academic_marks,name='add_academic_marks'),
-
-    # path('adacademicmark/', views.adacademicmark, name='adacademicmark'),
-
-   
+    
    
    
     
